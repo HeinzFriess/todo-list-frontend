@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LoginComponent implements OnInit {
   username: string = '';
   password: string = '';
-  constructor(private as:AuthService) { }
+  constructor(private as:AuthService, private router:Router) { }
 
   ngOnInit(): void {
 
@@ -17,11 +18,12 @@ export class LoginComponent implements OnInit {
 
   async login() {
     try {
-      let resp = await this.as.loginWithUsernameAndPassword(this.username, this.password);
+      let resp:any = await this.as.loginWithUsernameAndPassword(this.username, this.password);
       console.log(resp);
-      // TODO: Redirect
+      localStorage.setItem('token', resp['token'])
+      this.router.navigateByUrl('/todos')
     } catch (e) {
-      // Show error message
+      alert('Login fehlgeschlagen!')
       console.error(e);
 
     }

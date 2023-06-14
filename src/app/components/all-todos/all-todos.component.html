@@ -1,1 +1,6 @@
-<p>all-todos works!</p>
+<div *ngFor="let todo of todos">
+    <div class="card">
+        <h3><input type="checkbox" name="" id="" [checked]="todo.checked">{{todo.title}}</h3>
+        <span>{{todo.description}}</span>
+    </div>
+</div>
