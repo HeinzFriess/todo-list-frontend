@@ -18,4 +18,25 @@ export class AuthService {
     }
     return lastValueFrom(this.http.post(url, body));
   }
+
+  public addTask(title:string) {
+    const url = environment.baseUrl + 'todos/';
+    const body = {
+      "title": title
+    }
+    return lastValueFrom(this.http.post(url, body));
+
+  }
+
+  public updateTask(title:string, description:string, checked:boolean, todo_id:string) {
+    const url = environment.baseUrl + 'todos/' + todo_id + '/';
+    const body = {
+      "title": title,
+      "description": description,
+      "checked": checked,
+      "todo_id": todo_id
+    }
+    return lastValueFrom(this.http.put(url, body));
+
+  }
 }

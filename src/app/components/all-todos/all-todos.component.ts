@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -10,7 +11,10 @@ import { environment } from 'src/environments/environment';
 })
 export class AllTodosComponent implements OnInit {
   todos: any = [];
-  constructor(private http: HttpClient){}
+  checked: boolean = false;
+  title: string = '';
+  description: string = '';
+  constructor(private http: HttpClient, private as: AuthService) { }
 
   async ngOnInit() {
     this.todos = await this.loadTodos();
@@ -26,5 +30,27 @@ export class AllTodosComponent implements OnInit {
     //   headers: headers
     // }));
     return lastValueFrom(this.http.get(url));
+  }
+
+  async addTask() {
+    try {
+      let resp: any = await this.as.addTask(this.title);
+      console.log(resp);
+    } catch (e) {
+      alert('Task nicht gesendet!')
+      console.error(e);
+
+    }
+  }
+
+  async updateTask(todo_id: string) {
+    try {
+      let resp: any = await this.as.updateTask(this.todos[todo_id].title, this.todos[todo_id].description, this.todos[todo_id].checked, todo_id);
+      console.log(resp);
+    } catch (e) {
+      alert('Task nicht gesendet!')
+      console.error(e);
+
+    }
   }
 }
