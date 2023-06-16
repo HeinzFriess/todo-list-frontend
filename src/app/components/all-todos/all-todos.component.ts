@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { environment } from 'src/environments/environment';
@@ -14,11 +15,10 @@ export class AllTodosComponent implements OnInit {
   checked: boolean = false;
   title: string = '';
   description: string = '';
-  constructor(private http: HttpClient, private as: AuthService) { }
+  constructor(private http: HttpClient, private as: AuthService, private route: Router) { }
 
   async ngOnInit() {
     this.todos = await this.loadTodos();
-    console.log(this.todos);
   }
 
   loadTodos() {                                  //never[] | PromiseLike<never[]> {
@@ -31,11 +31,10 @@ export class AllTodosComponent implements OnInit {
     // }));
     return lastValueFrom(this.http.get(url));
   }
-
   async addTask() {
     try {
       let resp: any = await this.as.addTask(this.title);
-      console.log(resp);
+      this.route.navigateByUrl('/todos')
     } catch (e) {
       alert('Task nicht gesendet!')
       console.error(e);
@@ -43,14 +42,8 @@ export class AllTodosComponent implements OnInit {
     }
   }
 
-  async updateTask(todo_id: string) {
-    try {
-      let resp: any = await this.as.updateTask(this.todos[todo_id].title, this.todos[todo_id].description, this.todos[todo_id].checked, todo_id);
-      console.log(resp);
-    } catch (e) {
-      alert('Task nicht gesendet!')
-      console.error(e);
-
-    }
+  showDetail(todo_Id:string){
+    this.route.navigateByUrl('/todos/'+todo_Id)
   }
+
 }

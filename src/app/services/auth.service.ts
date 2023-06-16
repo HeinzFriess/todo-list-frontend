@@ -28,15 +28,21 @@ export class AuthService {
 
   }
 
-  public updateTask(title:string, description:string, checked:boolean, todo_id:string) {
-    const url = environment.baseUrl + 'todos/' + todo_id + '/';
+  public updateTask(title:string, description:string, checked:boolean, todo_Id:string) {
+    const url = environment.baseUrl + 'todos/' + todo_Id + '/';
+    
     const body = {
       "title": title,
       "description": description,
       "checked": checked,
-      "todo_id": todo_id
+      "todo_id": todo_Id
     }
     return lastValueFrom(this.http.put(url, body));
 
+  }
+
+  public deleteTask(todo_Id:string) {
+    const url = environment.baseUrl + 'todos/' + todo_Id + '/';
+    return lastValueFrom(this.http.delete(url));
   }
 }

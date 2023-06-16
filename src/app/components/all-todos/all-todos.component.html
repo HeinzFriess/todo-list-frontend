@@ -1,9 +1,7 @@
 <h2>Your Todos</h2>
 <div *ngFor="let todo of todos">
-    <div class="card">
+    <div class="card" (click)="showDetail(todo.id)">
         <h3><input type="checkbox" name=""  [checked]="todo.checked">{{todo.title}}</h3>
-        <!-- <input type="text" name="description" [(ngModel)]="todo.description" required> -->
-        <!-- <button (click)="updateTask(todo.id)">Update Task</button> -->
     </div>
 
 </div>

@@ -1,0 +1,12 @@
+<h2>Todo Detail</h2>
+<div>
+    <div class="card">
+        <h3><input type="checkbox" name=""  [checked]="checked" (change)="checked = !checked">{{title}}</h3>
+        <input type="text" name="description" [(ngModel)]="description" required>
+        <button (click)="updateTask()">Update Task</button>
+        <button (click)="deleteTask()">Delete Task</button>
+        <button (click)="return()">Return</button>
+    </div>
+
+</div>
+ 
